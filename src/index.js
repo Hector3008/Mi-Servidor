@@ -1,16 +1,20 @@
 import express from "express";
+import { connectDB } from "./db.js";
 import { services } from "./services.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+console.log("PORT: ", PORT)
 const BASE_PATH = process.env.BASE_PATH || "";
 
 app.get("/servidor", (req, res) => res.json({ status: "ok" }));
 
+const db = await connectDB();
+
 const gateway = express.Router();
 
-for (const { name, path, router } of services) {
-  gateway.use(path, router);
+for (const { name, path, factory } of services) {
+  gateway.use(path, factory({ db }));
   console.log(`[gateway] ${BASE_PATH}${path} montado (${name})`);
 }
 
