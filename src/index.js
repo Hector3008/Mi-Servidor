@@ -4,17 +4,19 @@ import { services } from "./services.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-console.log("PORT: ", PORT)
+console.log("PORT: ", PORT);
 const BASE_PATH = process.env.BASE_PATH || "";
 
-app.get("/servidor", (req, res) => res.json({ status: "ok" }));
+const { core, db } = await connectDB();
 
-const db = await connectDB();
+app.get("/servidor", async (req, res) => {
+  res.json({ status: "ok", db: await core.ping() });
+});
 
 const gateway = express.Router();
 
 for (const { name, path, factory } of services) {
-  gateway.use(path, factory({ db }));
+  gateway.use(path, factory({ db, core }));
   console.log(`[gateway] ${BASE_PATH}${path} montado (${name})`);
 }
 

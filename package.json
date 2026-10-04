@@ -20,8 +20,5 @@
   "type": "module",
   "engines": {
     "node": "22.x"
-  },
-  "devDependencies": {
-    "mongodb": "^7.7.0"
   }
 }

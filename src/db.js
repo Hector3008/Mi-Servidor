@@ -1,13 +1,18 @@
-import { MongoClient } from "mongodb";
+import mongoose from "mongoose";
+import { createCore } from "core";
 
 const uri = process.env.MONGODB_URI;
 if (!uri) throw new Error("Falta la variable de entorno MONGODB_URI");
 
-const client = new MongoClient(uri);
-
 export async function connectDB() {
-  await client.connect();
-  const db = client.db(process.env.MONGODB_DB || "mi-servidor");
+  // Una sola conexión para todo el gateway
+  const connection = await mongoose
+    .createConnection(uri, { dbName: process.env.MONGODB_DB || "mi-servidor" })
+    .asPromise();
   console.log("[db] conectado a MongoDB");
-  return db;
+
+  const core = createCore({ connection });
+
+  // db: el Db del driver nativo, de la MISMA conexión (lo que ya recibe "prueba")
+  return { core, db: connection.db };
 }
