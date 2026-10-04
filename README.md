@@ -1,230 +1,84 @@
 ﻿# Mi-Servidor
 
-Gateway en Node + Express que **ejecuta varios microservicios dentro de un solo servidor**, aunque el código de cada uno viva en su propio repositorio de GitHub.
+Gateway Express que abre **una única conexión a MongoDB** (Mongoose), crea el [núcleo](https://github.com/Hector3008/core) y monta cada microservicio como un router en su propia ruta.
 
-## La idea en una frase
-
-Cada microservicio es un repo independiente que **exporta un `Router` de Express**. El gateway lo instala como si fuera una librería (`npm i github:...`) y lo **monta en una ruta**. Se despliega solo el gateway.
+## Cómo funciona
 
 ```
-Repo microservicio-prueba-        Repo Mi-Servidor (este repo)
-┌──────────────────────┐          ┌──────────────────────────────────┐
-│ src/router.js        │  npm i   │ import prueba from "prueba"      │
-│ export default router│ ───────► │ gateway.use("/prueba", prueba)   │
-└──────────────────────┘          └──────────────────────────────────┘
-                                              │
-                                              ▼
-                                  Un solo servidor (Render)
-                                  GET /prueba  → microservicio "prueba"
-                                  GET /servidor → chequeo de salud
+src/
+  index.js      arranca Express, ruta de salud y montaje de servicios
+  db.js         abre la conexión y crea el núcleo
+  services.js   lista de servicios montados
 ```
 
-### Por qué así
+`db.js` devuelve `{ core, db }`: el núcleo y el `Db` del driver nativo de la misma conexión. Cada servicio exporta una función fábrica `createRouter({ db, core })`, y el gateway la llama con lo que necesita. Ningún servicio abre conexiones propias.
 
-- **Código separado:** cada microservicio tiene su repo, su historial y su ciclo de cambios.
-- **Un solo despliegue:** se paga y se mantiene un único servidor, sin arranques en frío por servicio.
-- **Sin red entre servicios:** no hay proxies, URLs internas ni claves compartidas.
+## Servicios montados
 
-### Qué se sacrifica
+| Servicio | Ruta | Repo |
+|---|---|---|
+| prueba | `/prueba` | [microservicio-prueba-](https://github.com/Hector3008/microservicio-prueba-) |
 
-- Todo corre en **un solo proceso**: un error que tumbe el servidor afecta a todos los servicios.
-- Comparten versión de Node y de Express.
-- Actualizar un microservicio exige **redesplegar el gateway** (ver más abajo).
+## Ruta de salud
 
-Es un monolito modular con el código repartido en repos, no microservicios independientes en producción.
+`GET /servidor`
 
----
-
-## Estructura de este repo
-
+```json
+{ "status": "ok", "db": { "ok": true, "estado": "conectado" } }
 ```
-Mi-Servidor/
-├── src/
-│   ├── index.js      ← arranca Express y monta los routers
-│   └── services.js   ← registro de microservicios
-├── package.json
-└── README.md
-```
-
-### `src/services.js`
-
-Lista de microservicios. Cada entrada tiene un nombre, la ruta donde se monta y el router importado:
-
-```js
-import prueba from "prueba";
-
-export const services = [
-  { name: "prueba", path: "/prueba", router: prueba },
-];
-```
-
-### `src/index.js`
-
-Recorre la lista y monta cada router:
-
-```js
-for (const { name, path, router } of services) {
-  gateway.use(path, router);
-}
-```
-
----
 
 ## Variables de entorno
 
-| Variable    | Para qué sirve                                                       | Por defecto |
-|-------------|----------------------------------------------------------------------|-------------|
-| `PORT`      | Puerto del servidor (Render lo define solo)                          | `3000`      |
-| `BASE_PATH` | Prefijo para todos los microservicios, por ejemplo `/gateway`        | vacío       |
+Se leen del archivo `.env` (no se sube al repo).
 
-Con `BASE_PATH=/gateway`, el microservicio queda en `/gateway/prueba`. La ruta `/servidor` no lleva prefijo.
+| Variable | Descripción | Por defecto |
+|---|---|---|
+| `MONGODB_URI` | URI de MongoDB (obligatoria) | — |
+| `MONGODB_DB` | Nombre de la base | `mi-servidor` |
+| `PORT` | Puerto | `3000` |
+| `BASE_PATH` | Prefijo para las rutas de los servicios | vacío |
 
----
+`/servidor` no lleva el prefijo de `BASE_PATH`.
 
-## Correr en local
-
-Requisitos: **Node 22** (o superior) y Git.
+## Ejecutar
 
 ```bash
 npm install
-npm run dev
+npm run dev     # con --watch y .env
+npm start       # sin .env: las variables deben estar en el entorno
 ```
 
-Debe imprimir `[gateway] /prueba montado (prueba)` y `Gateway en puerto 3000`. Luego abre:
+## Agregar un servicio
 
-- `http://localhost:3000/servidor` → `{"status":"ok"}`
-- `http://localhost:3000/prueba` → respuesta del microservicio
-
----
-
-## Cómo debe ser un microservicio
-
-Un microservicio es un repo con esta forma mínima:
-
-```
-microservicio-prueba-/
-├── src/
-│   └── router.js     ← toda la lógica; exporta el Router
-├── index.js          ← solo para probarlo suelto en local
-└── package.json
-```
-
-**`src/router.js`**
-
-```js
-import { Router } from "express";
-
-const router = Router();
-
-router.get("/", (req, res) => res.json({ msg: "Hola desde el microservicio" }));
-
-export default router;
-```
-
-**`index.js`** (opcional, solo desarrollo local; el gateway nunca lo carga)
-
-```js
-import express from "express";
-import router from "./src/router.js";
-
-const app = express();
-app.use("/", router);
-app.listen(process.env.PORT || 4001);
-```
-
-**`package.json`** (lo imprescindible)
-
-```json
-{
-  "name": "prueba",
-  "type": "module",
-  "main": "src/router.js",
-  "dependencies": { "express": "^5.2.1" }
-}
-```
-
-### Reglas que no hay que romper
-
-1. **`main` debe apuntar al router** (`src/router.js`), nunca a un archivo que llame a `app.listen`. Si no, el gateway levantaría un segundo servidor.
-2. **`name` del `package.json` es el nombre del import.** Si el `name` es `prueba`, el gateway hace `import prueba from "prueba"`, aunque el repo se llame distinto.
-3. **No usar `app.listen` dentro de `src/`.** Solo el gateway escucha en un puerto.
-4. **Rutas relativas al punto de montaje.** Dentro del router se escribe `/`, no `/prueba`; el gateway pone el prefijo.
-5. **Middlewares propios dentro del router.** Si el microservicio necesita leer JSON, usa `router.use(express.json())` dentro de su router, para no afectar a los demás.
-6. **Rutas nombradas con cuidado.** Dos microservicios no deben montarse en el mismo `path`.
-
----
-
-## Agregar un microservicio nuevo
-
-1. Crea su repo siguiendo la forma de arriba y súbelo a GitHub.
-2. En este repo, instálalo:
-
-   ```bash
-   npm i github:Hector3008/NOMBRE-DEL-REPO
-   ```
-
+1. Instálalo como dependencia: `npm install github:Hector3008/<repo>`.
+2. Debe exportar por defecto una fábrica: `export default function createRouter({ db, core }) { ... }`.
 3. Regístralo en `src/services.js`:
 
-   ```js
-   import prueba from "prueba";
-   import otro from "nombre-del-otro-paquete";
+```js
+import prueba from "prueba";
+import restaurante from "restaurante";
 
-   export const services = [
-     { name: "prueba", path: "/prueba", router: prueba },
-     { name: "otro", path: "/otro", router: otro },
-   ];
-   ```
+export const services = [
+  { name: "prueba", path: "/prueba", factory: prueba },
+  { name: "restaurante", path: "/restaurante", factory: restaurante },
+];
+```
 
-4. Prueba en local con `npm run dev` y sube los cambios.
+Dentro de un servicio, los permisos se exigen con el núcleo:
 
----
+```js
+router.post("/pedidos", core.requierePermiso("documento:crear"), crearPedido);
+```
 
-## Actualizar un microservicio que ya está instalado
+## Actualizar el núcleo
 
-`package-lock.json` guarda el **commit exacto** del microservicio que se instaló. Subir cambios al repo del microservicio **no actualiza el gateway automáticamente**.
+`core` y los servicios se instalan desde GitHub. Si npm responde "up to date" pero faltan archivos nuevos, el `package-lock.json` tiene fijado un commit anterior:
 
-1. Haz push de los cambios en el repo del microservicio.
-2. En este repo:
+```bash
+npm uninstall core
+npm install github:Hector3008/core
+```
 
-   ```bash
-   npm update prueba
-   ```
+## Requisitos
 
-3. Prueba en local.
-4. Sube el cambio, incluido el `package-lock.json`:
-
-   ```bash
-   git add .
-   git commit -m "Actualizar microservicio prueba"
-   git push
-   ```
-
-5. Render redespliega el gateway (por defecto, con cada push a `main`).
-
----
-
-## Despliegue en Render
-
-Solo se despliega **este repo**, como *Web Service*:
-
-- **Build Command:** `npm install`
-- **Start Command:** `npm start`
-- **Variables:** `BASE_PATH` si se quiere un prefijo (por ejemplo `/gateway`). `PORT` lo asigna Render.
-
-No se despliegan los repos de los microservicios por separado.
-
-**Repos privados:** si algún microservicio es privado, Render no podrá descargarlo con `npm install` sin credenciales. Hay que hacerlo público o configurar un token de acceso de solo lectura.
-
----
-
-## Solución de problemas
-
-| Síntoma | Causa probable | Solución |
-|---|---|---|
-| `Cannot find package 'prueba'` | El nombre del import no coincide con el `name` del microservicio, o no está instalado | Revisar `name` en su `package.json` y ejecutar `npm install` |
-| El import no tiene export por defecto | Falta `export default router` en `src/router.js` | Agregarlo |
-| Aparece un segundo mensaje como `escuchando en 4001` al arrancar el gateway | Se instaló una versión vieja del microservicio, o `main` apunta a un archivo con `app.listen` | Corregir `main`, subir, y ejecutar `npm update <paquete>` |
-| El gateway sigue mostrando el comportamiento anterior tras un cambio en el microservicio | El lockfile apunta al commit viejo | `npm update <paquete>` y subir el lockfile |
-| `Permission denied (publickey)` al hacer push | El remoto usa SSH sin llave configurada | `git remote set-url origin https://github.com/USUARIO/REPO.git` |
-| `npm` no se ejecuta en PowerShell | Política de ejecución de scripts | `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned` |
-| Error con `styleText` de `node:util` | Node demasiado viejo | Usar Node 22 o superior |
+Node 22 o superior y una base MongoDB accesible (por ejemplo, Atlas con tu IP permitida).
