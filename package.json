@@ -1,0 +1,22 @@
+{
+  "name": "mi-servidor",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000M\u0000i\u0000-\u0000S\u0000e\u0000r\u0000v\u0000i\u0000d\u0000o\u0000r\u0000\r\u0000 \u0000",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1",
+    "http-proxy-middleware": "^4.2.0"
+  },
+  "type": "module",
+  "engines": {
+    "node": "22.x"
+  }
+}
