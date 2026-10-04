@@ -1,26 +1,19 @@
 import express from "express";
-import { createProxyMiddleware } from "http-proxy-middleware";
 import { services } from "./services.js";
 
-/* 
-esta versión será descartada porque para funcionar requiere que el microservicio esté alojado en servidor aparte
-y en un principio solo contamos con pruebas gratuitas
-*/
 const app = express();
 const PORT = process.env.PORT || 3000;
+const BASE_PATH = process.env.BASE_PATH || "";
 
 app.get("/servidor", (req, res) => res.json({ status: "ok" }));
 
-for (const { name, path, target } of services) {
-  app.use(
-    createProxyMiddleware({
-      target,
-      changeOrigin: true,
-      pathFilter: path,
-      pathRewrite: { [`^${path}`]: "" },
-    }),
-  );
-  console.log(`[gateway] ${path} -> ${target} (${name})`);
+const gateway = express.Router();
+
+for (const { name, path, router } of services) {
+  gateway.use(path, router);
+  console.log(`[gateway] ${BASE_PATH}${path} montado (${name})`);
 }
+
+app.use(BASE_PATH || "/", gateway);
 
 app.listen(PORT, () => console.log(`Gateway en puerto ${PORT}`));
