@@ -2,6 +2,10 @@ import express from "express";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import { services } from "./services.js";
 
+/* 
+esta versión será descartada porque para funcionar requiere que el microservicio esté alojado en servidor aparte
+y en un principio solo contamos con pruebas gratuitas
+*/
 const app = express();
 const PORT = process.env.PORT || 3000;
 
