@@ -12,6 +12,7 @@ export async function connectDB() {
   console.log("[db] conectado a MongoDB");
 
   const core = createCore({ connection });
+  await core.documentos.listo();
 
   // db: el Db del driver nativo, de la MISMA conexión (lo que ya recibe "prueba")
   return { core, db: connection.db };
