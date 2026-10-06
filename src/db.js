@@ -13,6 +13,8 @@ export async function connectDB() {
 
   const core = createCore({ connection });
   await core.documentos.listo();
+  await core.eventos.listo();
+  await core.auth.listo(); // crea el índice único del token y el TTL
 
   // db: el Db del driver nativo, de la MISMA conexión (lo que ya recibe "prueba")
   return { core, db: connection.db };
