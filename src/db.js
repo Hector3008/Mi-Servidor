@@ -11,7 +11,10 @@ export async function connectDB() {
     .asPromise();
   console.log("[db] conectado a MongoDB");
 
-  const core = createCore({ connection });
+  const core = createCore({
+    connection,
+    auth: { pinPimienta: process.env.AUTH_PIN_PIMIENTA },
+  });
   await core.documentos.listo();
   await core.eventos.listo();
   await core.auth.listo(); // crea el índice único del token y el TTL

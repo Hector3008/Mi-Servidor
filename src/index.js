@@ -22,10 +22,7 @@ const gateway = express.Router();
 // --- Autenticación ---
 const auth = express.Router();
 auth.use(express.json());
-auth.post("/login", core.auth.manejadores.login);
-auth.post("/logout", core.auth.manejadores.logout);
-auth.get("/yo", core.auth.manejadores.yo);
-auth.post("/empresa", core.auth.manejadores.empresa);
+core.auth.montarRutas(auth); // ← sustituye a los 4 auth.post/get(...)
 gateway.use("/auth", auth);
 
 
