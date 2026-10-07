@@ -22,10 +22,14 @@ const gateway = express.Router();
 // --- Autenticación ---
 const auth = express.Router();
 auth.use(express.json());
-core.auth.montarRutas(auth); // ← sustituye a los 4 auth.post/get(...)
+core.auth.montarRutas(auth);
 gateway.use("/auth", auth);
 
-
+// --- Microservicios ---
+for (const { name, path, factory } of services) {
+  gateway.use(path, factory({ db, core }));
+  console.log(`[gateway] ${BASE_PATH}${path} montado (${name})`);
+}
 
 app.use(BASE_PATH || "/", gateway);
 
