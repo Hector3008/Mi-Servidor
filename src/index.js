@@ -25,6 +25,17 @@ auth.use(express.json());
 core.auth.montarRutas(auth);
 gateway.use("/auth", auth);
 
+// --- Empleados ---
+const empleados = express.Router();
+empleados.use(express.json());
+core.empleados.montarRutas(empleados);
+gateway.use("/empleados", empleados);
+
+// --- Clientes ---
+ const clientes = express.Router();
+ clientes.use(express.json());
+ core.clientes.montarRutas(clientes);
+ gateway.use("/clientes", clientes);
 // --- Microservicios ---
 for (const { name, path, factory } of services) {
   gateway.use(path, factory({ db, core }));
