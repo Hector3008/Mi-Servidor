@@ -15,7 +15,8 @@
     "core": "github:Hector3008/core",
     "express": "^5.2.1",
     "mongoose": "^9.10.4",
-    "prueba": "github:Hector3008/microservicio-prueba-"
+    "prueba": "github:Hector3008/microservicio-prueba-",
+    "restaurante": "github:Hector3008/restaurante"
   },
   "type": "module",
   "engines": {

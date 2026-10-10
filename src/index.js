@@ -1,6 +1,7 @@
 import express from "express";
 import { connectDB } from "./db.js";
 import { services } from "./services.js";
+import { createRouter as crearRestaurante } from "restaurante";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -36,11 +37,20 @@ gateway.use("/empleados", empleados);
  clientes.use(express.json());
  core.clientes.montarRutas(clientes);
  gateway.use("/clientes", clientes);
+
 // --- Microservicios ---
 for (const { name, path, factory } of services) {
   gateway.use(path, factory({ db, core }));
   console.log(`[gateway] ${BASE_PATH}${path} montado (${name})`);
 }
+//-- Catalogo -- 
+   const catalogo = express.Router();
+   catalogo.use(express.json({ limit: "1mb" })); // una importación admite hasta 500 filas
+   core.catalogo.montarRutas(catalogo);
+   gateway.use("/catalogo", catalogo);
+
+   // --- Restaurante ---
+gateway.use("/restaurante", crearRestaurante({ core }));
 
 app.use(BASE_PATH || "/", gateway);
 
