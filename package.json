@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/index.js",
+     "start": "node --env-file=.env src/index.js",
     "dev": "node --watch --env-file=.env src/index.js"
   },
   "keywords": [],
@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "core": "github:Hector3008/core",
+    "cuenta": "github:Hector3008/cuenta",
     "express": "^5.2.1",
     "mongoose": "^9.10.4",
     "prueba": "github:Hector3008/microservicio-prueba-",
