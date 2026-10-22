@@ -1,8 +1,8 @@
-// Humo del servicio restaurante contra el gateway en marcha (HTTP real). VA EN test/ DEL GATEWAY, no en la del repo restaurante ni en core (5.9).
+// Humo del servicio tobt contra el gateway en marcha (HTTP real). VA EN test/ DEL GATEWAY, no en la del repo tobt ni en core (5.9).
 // Uso (PowerShell), con el gateway arrancado SIN --watch:
-//   $env:BASE="http://localhost:3000"; $env:ADMIN_CORREO="admin@prueba.com"; $env:ADMIN_PASSWORD="clave-prueba-1"; node humo-restaurante.mjs
-// Requiere haber corrido crear-datos-humo-pin.mjs (admin en la empresa de prueba, con el servicio restaurante contratado)
-// y que el gateway monte /restaurante, /catalogo y /empleados.
+//   $env:BASE="http://localhost:3000"; $env:ADMIN_CORREO="admin@prueba.com"; $env:ADMIN_PASSWORD="clave-prueba-1"; node humo-tobt.mjs
+// Requiere haber corrido crear-datos-humo-pin.mjs (admin en la empresa de prueba, con el servicio tobt contratado)
+// y que el gateway monte /tobt, /catalogo y /empleados.
 import assert from "node:assert/strict";
 
 const BASE = process.env.BASE ?? "http://localhost:3000";
@@ -35,7 +35,7 @@ const mesero = navegador();
 const sinSesion = navegador();
 const paso = (n, txt) => console.log(`${n}. ${txt}`);
 const marca = Date.now().toString(36);
-const R = "/restaurante/pedidos";
+const R = "/tobt/pedidos";
 
 let r = await admin("POST", "/auth/login", { correo: ADMIN_CORREO, password: ADMIN_PASSWORD });
 assert.equal(r.status, 200, "login del admin");
@@ -138,4 +138,4 @@ r = await fetch(BASE + R, { method: "POST", headers: { "content-type": "applicat
 assert.ok([401, 403].includes(r.status));
 paso(10, "lista por estado, 404 inexistente, 401 sin sesión ✔");
 
-console.log("\nHumo del restaurante: todo bien.");
+console.log("\nHumo de tobt: todo bien.");

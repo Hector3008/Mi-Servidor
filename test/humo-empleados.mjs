@@ -40,7 +40,7 @@ const conn = await mongoose
   .asPromise();
 const core = createCore({ connection: conn });
 await core.auth.listo();
-const empresa = await core.empresas.crearEmpresa({ nombre: `Humo ${T}`, slug: `humo-${T}`, servicios: ["restaurante"] });
+const empresa = await core.empresas.crearEmpresa({ nombre: `Humo ${T}`, slug: `humo-${T}`, servicios: ["tobt"] });
 const admin = await core.empresas.crearUsuario({ correo: `admin-${T}@humo.test`, password: PASS_ADMIN, nombre: "Admin Humo" });
 await core.empresas.agregarMiembro({ empresaId: empresa._id, usuarioId: admin._id, rol: "admin" });
 await core.auth.guardarSeguridad({ empresaId: empresa._id, pin: { habilitado: true } });

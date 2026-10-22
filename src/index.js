@@ -1,7 +1,7 @@
 import express from "express";
 import { connectDB } from "./db.js";
 import { services } from "./services.js";
-import { createRouter as crearRestaurante } from "restaurante";
+import { createRouter as crearTobt } from "tobt";
 import { createRouter as cuenta } from "cuenta";
 
 const app = express();
@@ -50,8 +50,8 @@ for (const { name, path, factory } of services) {
    core.catalogo.montarRutas(catalogo);
    gateway.use("/catalogo", catalogo);
 
-   // --- Restaurante ---
-gateway.use("/restaurante", crearRestaurante({ core }));
+   // --- Tobt ---
+gateway.use("/tobt", crearTobt({ core }));
 //-- login / cuenta --
 gateway.use("/cuenta", cuenta());
 app.use(BASE_PATH || "/", gateway);

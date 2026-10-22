@@ -17,7 +17,7 @@
     "express": "^5.2.1",
     "mongoose": "^9.10.4",
     "prueba": "github:Hector3008/microservicio-prueba-",
-    "restaurante": "github:Hector3008/restaurante"
+    "tobt": "github:Hector3008/tobt"
   },
   "type": "module",
   "engines": {

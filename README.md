@@ -56,11 +56,11 @@ npm start       # sin .env: las variables deben estar en el entorno
 
 ```js
 import prueba from "prueba";
-import restaurante from "restaurante";
+import tobt from "tobt";
 
 export const services = [
   { name: "prueba", path: "/prueba", factory: prueba },
-  { name: "restaurante", path: "/restaurante", factory: restaurante },
+  { name: "tobt", path: "/tobt", factory: tobt },
 ];
 ```
 

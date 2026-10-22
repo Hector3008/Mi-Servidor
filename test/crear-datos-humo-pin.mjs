@@ -14,7 +14,7 @@ const { Empresa, Usuario } = core.modelos;
 
 const empresa =
   (await Empresa.findOne({ slug: SLUG })) ??
-  (await core.empresas.crearEmpresa({ nombre: "Café de prueba", slug: SLUG, servicios: ["restaurante"] }));
+  (await core.empresas.crearEmpresa({ nombre: "Café de prueba", slug: SLUG, servicios: ["tobt"] }));
 
 for (const { correo, nombre, rol } of USUARIOS) {
   const usuario =

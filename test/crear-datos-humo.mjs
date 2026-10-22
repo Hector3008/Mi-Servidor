@@ -12,7 +12,7 @@ const empresa =
   (await core.empresas.crearEmpresa({
     nombre: "Café de prueba",
     slug: SLUG,
-    servicios: ["restaurante"], // copia a la empresa las plantillas de rol: mesero, cocina, delivery
+    servicios: ["tobt"], // copia a la empresa las plantillas de rol: mesero, cocina, delivery
   }));
 
 const usuario =

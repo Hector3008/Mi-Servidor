@@ -3,11 +3,11 @@
 //
 // Uso (desde la raíz del gateway, con el .env que tiene MONGODB_URI y MONGODB_DB):
 //   node --env-file=.env herramientas/crear-empresa.mjs \
-//     --nombre "Café Central" --slug cafe-central --servicios restaurante \
+//     --nombre "Café Central" --slug cafe-central --servicios tobt \
 //     --admin-correo ana@cafecentral.com --admin-nombre "Ana Pérez" \
 //     [--pais PE] [--moneda PEN] [--dry-run]
 //
-// --servicios acepta varios códigos separados por coma (restaurante,siscore).
+// --servicios acepta varios códigos separados por coma (tobt,siscore).
 // --dry-run valida todo y no escribe nada.
 //
 // Si el correo ya tiene cuenta, se afilia a la empresa nueva como admin con su cuenta
@@ -23,7 +23,7 @@ import { createCore, conEmpresa } from "core";
 
 const USO = `Uso:
   node --env-file=.env herramientas/crear-empresa.mjs \\
-    --nombre "Café Central" --slug cafe-central --servicios restaurante \\
+    --nombre "Café Central" --slug cafe-central --servicios tobt \\
     --admin-correo ana@cafecentral.com --admin-nombre "Ana Pérez" \\
     [--pais PE] [--moneda PEN] [--dry-run]`;
 
@@ -78,9 +78,9 @@ if (!slug) fallar("falta --slug.", { uso: true });
 if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug) || slug.length > 60) {
   fallar("--slug solo admite minúsculas, números y guiones (por ejemplo cafe-central), hasta 60 caracteres.");
 }
-if (servicios.length === 0) fallar("falta --servicios (por ejemplo restaurante).", { uso: true });
+if (servicios.length === 0) fallar("falta --servicios (por ejemplo tobt).", { uso: true });
 if (servicios.some((s) => !/^[a-z][a-z0-9_]*$/.test(s))) {
-  fallar("cada código de --servicios va en minúsculas, números y _ (por ejemplo restaurante,siscore).");
+  fallar("cada código de --servicios va en minúsculas, números y _ (por ejemplo tobt,siscore).");
 }
 if (!/^[A-Z]{2}$/.test(pais)) fallar("--pais debe ser un código ISO de 2 letras (PE, AR, ...).");
 if (!/^[A-Z]{3}$/.test(moneda)) fallar("--moneda debe ser un código ISO 4217 de 3 letras (PEN, USD, ...).");
