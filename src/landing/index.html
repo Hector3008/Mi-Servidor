@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mi-Servidor · plataforma de servicios</title>
+<meta name="description" content="Un gateway, una base de datos y un núcleo común sobre el que se montan servicios para negocios.">
+<style>
+  :root {
+    --fondo: #f7f6f2;
+    --superficie: #ffffff;
+    --texto: #1c1f24;
+    --texto-suave: #5a6270;
+    --borde: #dcd9d0;
+    --principal: #1f5f4a;
+    --principal-texto: #ffffff;
+    --acento: #b4561b;
+    --radio: 14px;
+    --fuente: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fondo: #12151a;
+      --superficie: #1a1f26;
+      --texto: #eceef2;
+      --texto-suave: #a2abb8;
+      --borde: #2b323c;
+      --principal: #5fc3a0;
+      --principal-texto: #0c1713;
+      --acento: #e59a63;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--fondo);
+    color: var(--texto);
+    font: 16px/1.6 var(--fuente);
+  }
+  a { color: inherit; }
+  .contenedor { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+  header.barra { padding: 20px 0; }
+  header.barra .contenedor {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .marca { font-weight: 700; letter-spacing: .01em; text-decoration: none; }
+  .marca span { color: var(--acento); }
+  .boton {
+    display: inline-block; text-decoration: none; font-weight: 600;
+    padding: 10px 18px; border-radius: 999px;
+    background: var(--principal); color: var(--principal-texto);
+    border: 1px solid var(--principal);
+  }
+  .boton.secundario { background: transparent; color: var(--texto); border-color: var(--borde); }
+  .boton:hover { filter: brightness(1.06); }
+  .boton:focus-visible, a:focus-visible { outline: 3px solid var(--acento); outline-offset: 2px; }
+  .hero { padding: 56px 0 40px; }
+  .hero p.etiqueta {
+    margin: 0 0 12px; font: 600 13px/1 var(--mono);
+    text-transform: uppercase; letter-spacing: .12em; color: var(--acento);
+  }
+  .hero h1 {
+    margin: 0 0 16px; font-size: clamp(2rem, 6vw, 3.25rem);
+    line-height: 1.1; letter-spacing: -.02em; max-width: 18ch;
+  }
+  .hero p.lead { margin: 0 0 28px; max-width: 58ch; font-size: 1.125rem; color: var(--texto-suave); }
+  .acciones { display: flex; flex-wrap: wrap; gap: 12px; }
+  section { padding: 32px 0; border-top: 1px solid var(--borde); }
+  section h2 { margin: 0 0 8px; font-size: 1.4rem; letter-spacing: -.01em; }
+  section > .contenedor > p { margin: 0 0 20px; color: var(--texto-suave); max-width: 62ch; }
+  .rejilla { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .tarjeta {
+    background: var(--superficie); border: 1px solid var(--borde);
+    border-radius: var(--radio); padding: 18px;
+  }
+  .tarjeta h3 { margin: 0 0 6px; font-size: 1.05rem; }
+  .tarjeta p { margin: 0; color: var(--texto-suave); font-size: .95rem; }
+  .estado {
+    display: inline-block; margin-bottom: 8px; padding: 2px 10px; border-radius: 999px;
+    font: 600 12px/1.6 var(--mono); border: 1px solid var(--borde); color: var(--texto-suave);
+  }
+  .estado.activo { color: var(--principal); border-color: var(--principal); }
+  .capas { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+  .capas li {
+    display: grid; grid-template-columns: 9.5rem 1fr; gap: 12px; align-items: baseline;
+    background: var(--superficie); border: 1px solid var(--borde);
+    border-radius: var(--radio); padding: 14px 18px;
+  }
+  .capas b { font-family: var(--mono); font-size: .9rem; }
+  .capas span { color: var(--texto-suave); font-size: .95rem; }
+  footer { padding: 28px 0 48px; border-top: 1px solid var(--borde); color: var(--texto-suave); font-size: .9rem; }
+  footer .contenedor { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+  @media (max-width: 560px) {
+    .hero { padding-top: 32px; }
+    .capas li { grid-template-columns: 1fr; gap: 2px; }
+    .boton { width: 100%; text-align: center; }
+  }
+</style>
+</head>
+<body>
+  <header class="barra">
+    <div class="contenedor">
+      <a class="marca" href="./">Mi-<span>Servidor</span></a>
+      <a class="boton secundario" href="cuenta/">Entrar</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div class="contenedor">
+        <p class="etiqueta">Plataforma de servicios</p>
+        <h1>Una base común para varios servicios.</h1>
+        <p class="lead">
+          Mi-Servidor es un gateway con una sola base de datos y un núcleo compartido
+          (empresas, personas, permisos, documentos y eventos). Cada servicio se monta encima
+          sin reescribir lo común.
+        </p>
+        <div class="acciones">
+          <a class="boton" href="cuenta/">Entrar a mi cuenta</a>
+          <a class="boton secundario" href="#como-funciona">Cómo funciona</a>
+        </div>
+      </div>
+    </div>
+
+    <section id="como-funciona">
+      <div class="contenedor">
+        <h2>Cómo está armada</h2>
+        <p>Tres capas: el núcleo se escribe una sola vez, los servicios lo usan y las personas entran por su cuenta.</p>
+        <ul class="capas">
+          <li><b>Gateway</b><span>Abre la única conexión a MongoDB y monta cada servicio en su ruta.</span></li>
+          <li><b>Núcleo</b><span>Multiempresa, autenticación con contraseña o PIN, roles y permisos, clientes, catálogo, motor de documentos con estados y versiones, eventos y fidelización.</span></li>
+          <li><b>Servicios</b><span>Cada uno trae su propia lógica y su propia pantalla, y registra sus documentos en el núcleo.</span></li>
+          <li><b>Cuenta</b><span>La puerta de entrada de la persona: inicio de sesión, elección de empresa y acceso a lo que su rol permite.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="contenedor">
+        <h2>Servicios</h2>
+        <p>Cada empresa contrata los servicios que necesita y ve solo lo que sus permisos le dejan ver.</p>
+        <div class="rejilla">
+          <article class="tarjeta">
+            <span class="estado activo">disponible</span>
+            <h3>Tobt</h3>
+            <p>Tu bar and table: pedidos, cocina, carta pública, puntos y vales para clientes, recibos y reportes de ventas.</p>
+          </article>
+          <article class="tarjeta">
+            <span class="estado">en migración</span>
+            <h3>Siscore</h3>
+            <p>Proformas, guías de almacén y revisión para la venta de repuestos.</p>
+          </article>
+          <article class="tarjeta">
+            <span class="estado">a futuro</span>
+            <h3>Más servicios</h3>
+            <p>Inventario para tiendas y logística, sobre el mismo núcleo.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="contenedor">
+        <h2>Principios</h2>
+        <div class="rejilla">
+          <article class="tarjeta">
+            <h3>Cada empresa, aislada</h3>
+            <p>Todo dato de negocio lleva su empresa; una empresa no ve la de otra.</p>
+          </article>
+          <article class="tarjeta">
+            <h3>Nada se borra</h3>
+            <p>Los documentos avanzan por estados y dejan historial, versiones y eventos.</p>
+          </article>
+          <article class="tarjeta">
+            <h3>Permisos por rol</h3>
+            <p>El rol decide qué estaciones y acciones tiene cada persona; el servidor lo comprueba siempre.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="contenedor">
+      <span>Mi-Servidor</span>
+      <a href="cuenta/">Entrar</a>
+    </div>
+  </footer>
+</body>
+</html>

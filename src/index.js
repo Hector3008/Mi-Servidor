@@ -3,6 +3,8 @@ import { connectDB } from "./db.js";
 import { services } from "./services.js";
 import { createRouter as crearTobt } from "tobt";
 import { createRouter as cuenta } from "cuenta";
+ import { crearLanding } from "./landing/index.js";
+ 
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -26,6 +28,8 @@ const auth = express.Router();
 auth.use(express.json());
 core.auth.montarRutas(auth);
 gateway.use("/auth", auth);
+
+gateway.use(crearLanding());
 
 // --- Empleados ---
 const empleados = express.Router();
