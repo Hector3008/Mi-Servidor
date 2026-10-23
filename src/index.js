@@ -60,4 +60,9 @@ gateway.use("/tobt", crearTobt({ core }));
 gateway.use("/cuenta", cuenta());
 app.use(BASE_PATH || "/", gateway);
 
+const promociones = express.Router();
+promociones.use(express.json());
+core.promociones.montarRutas(promociones);
+gateway.use("/promociones", promociones);
+
 app.listen(PORT, () => console.log(`Gateway en puerto ${PORT}`));
