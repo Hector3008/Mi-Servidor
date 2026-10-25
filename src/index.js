@@ -4,6 +4,7 @@ import { services } from "./services.js";
 import { createRouter as crearTobt } from "tobt";
 import { createRouter as cuenta } from "cuenta";
  import { crearLanding } from "./landing/index.js";
+import { crearLegal } from "./legal/index.js";
  
 
 const app = express();
@@ -30,6 +31,9 @@ core.auth.montarRutas(auth);
 gateway.use("/auth", auth);
 
 gateway.use(crearLanding());
+
+// Términos y condiciones y política de privacidad (/terminos, /privacidad); los datos del responsable salen de LEGAL_*.
+gateway.use(crearLegal());
 
 // --- Empleados ---
 const empleados = express.Router();

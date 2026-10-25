@@ -37,8 +37,18 @@ Se leen del archivo `.env` (no se sube al repo).
 | `MONGODB_DB` | Nombre de la base | `mi-servidor` |
 | `PORT` | Puerto | `3000` |
 | `BASE_PATH` | Prefijo para las rutas de los servicios | vacío |
+| `NOMBRE_PLATAFORMA` | Nombre con que se presenta el servicio en los textos legales | `Mi-Servidor` |
+| `LEGAL_RESPONSABLE` | Nombre o razón social de quien presta el servicio (sale en `/terminos` y `/privacidad`) | — (la página muestra «pendiente de configurar») |
+| `LEGAL_DOCUMENTO` | RUC o DNI del responsable (opcional) | — |
+| `LEGAL_CORREO` | Correo de contacto y para ejercer derechos sobre datos personales | — (idem) |
+| `LEGAL_JURISDICCION` | Ciudad cuyos tribunales resuelven controversias | `Lima` |
+| `GOOGLE_CLIENT_ID` | ID de cliente de Google para «Entrar con Google» (público, sin secreto); sin él el botón no se muestra | — |
 
 `/servidor` no lleva el prefijo de `BASE_PATH`.
+
+## Páginas legales
+
+`/terminos` (términos y condiciones) y `/privacidad` (política de privacidad) las sirve el gateway (`src/legal/`). Son páginas estáticas, con enlaces relativos (funcionan con cualquier `BASE_PATH`). Los datos del responsable salen de las variables `LEGAL_*`; si faltan, el gateway avisa al arrancar y la página muestra «pendiente de configurar». Si cambias el contenido de un texto, cambia también su fecha de versión en `src/legal/config.js`. Google pide que la política de privacidad esté en el mismo dominio que la página de inicio.
 
 ## Ejecutar
 
