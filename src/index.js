@@ -65,4 +65,11 @@ promociones.use(express.json());
 core.promociones.montarRutas(promociones);
 gateway.use("/promociones", promociones);
 
+
+const anuncios = express.Router();
+anuncios.use(express.json());
+core.anuncios.montarRutas(anuncios);
+gateway.use("/anuncios", anuncios);
+
+
 app.listen(PORT, () => console.log(`Gateway en puerto ${PORT}`));
