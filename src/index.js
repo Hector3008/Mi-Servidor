@@ -27,6 +27,7 @@ const gateway = express.Router();
 
 // Favicon de la plataforma. Va también en la raíz del dominio (donde lo piden los navegadores) aunque haya BASE_PATH.
 app.use(crearIconos());
+if (BASE_PATH) gateway.use(crearIconos()); // los <link> de las páginas son relativos: con BASE_PATH apuntan dentro del prefijo
 
 // --- Autenticación ---
 const auth = express.Router();
