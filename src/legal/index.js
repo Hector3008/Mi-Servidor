@@ -22,7 +22,7 @@ export function crearLegal({ env = process.env, avisar = console.warn } = {}) {
         "Cache-Control": "public, max-age=300",
         "X-Content-Type-Options": "nosniff",
         // Solo estilos en línea: la página no tiene scripts, imágenes ni formularios.
-        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",
+        "Content-Security-Policy": "default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",
       });
       res.type("html").send(html);
     });

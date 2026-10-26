@@ -5,6 +5,7 @@ import { createRouter as crearTobt } from "tobt";
 import { createRouter as cuenta } from "cuenta";
  import { crearLanding } from "./landing/index.js";
 import { crearLegal } from "./legal/index.js";
+import { crearIconos } from "./iconos/index.js";
  
 
 const app = express();
@@ -23,6 +24,9 @@ app.get("/servidor", async (req, res) => {
 });
 
 const gateway = express.Router();
+
+// Favicon de la plataforma. Va también en la raíz del dominio (donde lo piden los navegadores) aunque haya BASE_PATH.
+app.use(crearIconos());
 
 // --- Autenticación ---
 const auth = express.Router();

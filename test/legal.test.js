@@ -122,6 +122,8 @@ test("lleva cabeceras de seguridad: sin scripts, sin incrustarse en otros sitios
     const r = await pedir(server, "/terminos");
     assert.match(r.headers["content-security-policy"], /default-src 'none'/);
     assert.match(r.headers["content-security-policy"], /frame-ancestors 'none'/);
+    assert.match(r.headers["content-security-policy"], /img-src 'self'/); // para el favicon
+    assert.match(r.cuerpo, /rel="icon"/);
     assert.equal(r.headers["x-content-type-options"], "nosniff");
     assert.doesNotMatch(r.cuerpo, /<script/i);
   });
