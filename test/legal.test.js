@@ -50,7 +50,7 @@ test("sirve los términos y la privacidad como HTML en español, con el responsa
       assert.match(r.cuerpo, /Ana Pérez \(20123456789\)/);
       assert.match(r.cuerpo, /href="mailto:contacto@ejemplo\.pe"/);
       assert.doesNotMatch(r.cuerpo, /Pendiente de configurar/);
-      assert.match(r.cuerpo, /Mi-Servidor/);
+      assert.match(r.cuerpo, /Ilnapo/);
     }
     assert.deepEqual(avisos, [], "con todo configurado no avisa");
   });

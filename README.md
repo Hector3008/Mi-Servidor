@@ -1,4 +1,4 @@
-﻿# Mi-Servidor
+﻿# Ilnapo
 
 Gateway Express que abre **una única conexión a MongoDB** (Mongoose), crea el [núcleo](https://github.com/Hector3008/core) y monta cada microservicio como un router en su propia ruta.
 
@@ -37,7 +37,7 @@ Se leen del archivo `.env` (no se sube al repo).
 | `MONGODB_DB` | Nombre de la base | `mi-servidor` |
 | `PORT` | Puerto | `3000` |
 | `BASE_PATH` | Prefijo para las rutas de los servicios | vacío |
-| `NOMBRE_PLATAFORMA` | Nombre con que se presenta el servicio en los textos legales | `Mi-Servidor` |
+| `NOMBRE_PLATAFORMA` | Nombre con que se presenta el servicio en los textos legales | `Ilnapo` |
 | `LEGAL_RESPONSABLE` | Nombre o razón social de quien presta el servicio (sale en `/terminos` y `/privacidad`) | — (la página muestra «pendiente de configurar») |
 | `LEGAL_DOCUMENTO` | RUC o DNI del responsable (opcional) | — |
 | `LEGAL_CORREO` | Correo de contacto y para ejercer derechos sobre datos personales | — (idem) |

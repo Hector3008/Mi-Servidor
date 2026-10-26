@@ -1,6 +1,6 @@
 // Datos del responsable que salen en los textos legales. Vienen de variables de entorno del gateway (no se
 // escriben en el código): así cada despliegue pone sus propios datos sin tocar los textos.
-//   NOMBRE_PLATAFORMA   nombre con que se presenta el servicio (por defecto «Mi-Servidor»)
+//   NOMBRE_PLATAFORMA   nombre con que se presenta el servicio (por defecto «Ilnapo»)
 //   LEGAL_RESPONSABLE   nombre de la persona o razón social que presta el servicio
 //   LEGAL_DOCUMENTO     RUC o DNI del responsable (opcional)
 //   LEGAL_CORREO        correo de contacto para consultas y para ejercer derechos sobre datos personales
@@ -20,7 +20,7 @@ const limpio = (v, max) => {
 export function leerConfigLegal(env = process.env) {
   const correo = limpio(env.LEGAL_CORREO, 254);
   const cfg = {
-    plataforma: limpio(env.NOMBRE_PLATAFORMA, 60) || "Mi-Servidor",
+    plataforma: limpio(env.NOMBRE_PLATAFORMA, 60) || "Ilnapo",
     responsable: limpio(env.LEGAL_RESPONSABLE, 120),
     documento: limpio(env.LEGAL_DOCUMENTO, 40),
     correo: CORREO.test(correo) ? correo : "",
