@@ -173,3 +173,12 @@ test("las versiones de los textos legales subieron con las reseñas (26 de octub
   assert.equal(VERSION_TERMINOS, "2026-10-26");
   assert.equal(VERSION_PRIVACIDAD, "2026-10-26");
 });
+
+test("el pie de las páginas legales lleva al landing de la plataforma (5.61)", async () => {
+  await con({ ...COMPLETO, NOMBRE_PLATAFORMA: "Ilnapo" }, async (server) => {
+    for (const ruta of ["/terminos", "/privacidad"]) {
+      const r = await pedir(server, ruta);
+      assert.match(r.cuerpo, /<footer>[\s\S]*<a href="\.\/">Ilnapo<\/a>[\s\S]*<\/footer>/, ruta);
+    }
+  });
+});

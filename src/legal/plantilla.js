@@ -80,7 +80,7 @@ export function pagina({ cfg, titulo, descripcion, vigencia, secciones, otra, av
   </main>
   <footer>
     <div class="contenedor">
-      <span>${esc(cfg.plataforma)}</span>
+      <a href="./">${esc(cfg.plataforma)}</a>
       <nav><a href="terminos">Términos y condiciones</a> · <a href="privacidad">Política de privacidad</a></nav>
     </div>
   </footer>
