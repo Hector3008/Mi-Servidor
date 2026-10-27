@@ -155,3 +155,21 @@ test("el landing enlaza a las dos páginas legales", async () => {
     assert.match(r.cuerpo, /href="cuenta\/"/);
   });
 });
+
+test("las reseñas de platos (5.62) están en los términos y en la política de privacidad", async () => {
+  await con(COMPLETO, async (server) => {
+    const t = await pedir(server, "/terminos");
+    const p = await pedir(server, "/privacidad");
+    assert.match(t.cuerpo, /Reseñas de platos/);
+    assert.match(t.cuerpo, /500 caracteres/);
+    assert.match(t.cuerpo, /ocultar/);
+    assert.match(p.cuerpo, /Tus reseñas/);
+    assert.match(p.cuerpo, /públicas/);
+    assert.match(p.cuerpo, /Anónimo/);
+  });
+});
+
+test("las versiones de los textos legales subieron con las reseñas (26 de octubre de 2026)", () => {
+  assert.equal(VERSION_TERMINOS, "2026-10-26");
+  assert.equal(VERSION_PRIVACIDAD, "2026-10-26");
+});

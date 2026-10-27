@@ -7,8 +7,8 @@
 //   LEGAL_JURISDICCION  ciudad cuyos tribunales resuelven controversias (por defecto «Lima»)
 
 // Fecha de la versión vigente de cada texto. Hay que cambiarla cada vez que cambie el contenido de la página.
-export const VERSION_TERMINOS = "2026-10-25";
-export const VERSION_PRIVACIDAD = "2026-10-25";
+export const VERSION_TERMINOS = "2026-10-26";
+export const VERSION_PRIVACIDAD = "2026-10-26";
 
 const CORREO = /^[^\s@<>"']{1,64}@[^\s@<>"']{1,200}\.[^\s@<>"']{2,}$/;
 const limpio = (v, max) => {

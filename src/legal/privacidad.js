@@ -22,6 +22,7 @@ export function paginaPrivacidad(cfg) {
         <li><em>Datos de tu ficha:</em> nombre, correo y/o teléfono. Si el establecimiento los registra, también otros datos de contacto o preferencias.</li>
         <li><em>Datos de acceso:</em> tu contraseña, que se guarda transformada de forma irreversible (nunca en texto legible, ni siquiera podemos verla). Si entras con Google no hay contraseña (ver la sección sobre Google).</li>
         <li><em>Tus consumos en ese establecimiento:</em> pedidos asociados a tu ficha, puntos acumulados y sus movimientos, logros, vales y, si usas un código de invitación, quién te invitó o a quién invitaste.</li>
+        <li><em>Tus reseñas:</em> las estrellas y el comentario que dejes sobre un plato que pagaste. Son <strong>públicas</strong>: cualquier persona que abra la carta las ve con tu primer nombre y la inicial de tu apellido. Si las borras, dejan de mostrarse; si cancelas tu cuenta, tu nombre en ellas pasa a «Anónimo».</li>
         <li><em>Tu aceptación del programa de puntos:</em> si la diste o la retiraste, cuándo y por qué medio.</li>
         <li><em>Pedidos con entrega (delivery):</em> la dirección y los datos de entrega que se registren en ese pedido.</li>
       </ul>
@@ -39,6 +40,7 @@ export function paginaPrivacidad(cfg) {
       </ul>`],
     ["Con quién se comparten", `
       <ul>
+        <li><strong>Cualquier visitante de la carta:</strong> tus reseñas, con tu primer nombre y la inicial de tu apellido (nunca tu correo ni tu teléfono).</li>
         <li><strong>El establecimiento donde tienes tu cuenta:</strong> su personal autorizado ve tu ficha (nombre, datos de contacto, puntos y consumos), porque es quien te atiende. Un establecimiento no ve los datos de los clientes de otro.</li>
         <li><strong>Proveedores que alojan el servicio</strong> (nube y base de datos): procesan los datos solo para que el servicio funcione, bajo medidas de seguridad. Sus servidores pueden estar fuera del Perú.</li>
         <li><strong>Google</strong>, en el momento de iniciar sesión con tu cuenta de Google.</li>

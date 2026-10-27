@@ -80,5 +80,11 @@ anuncios.use(express.json());
 core.anuncios.montarRutas(anuncios);
 gateway.use("/anuncios", anuncios);
 
+// Moderación de reseñas de platos (5.62): resena:leer / resena:gestionar. Los clientes escriben las suyas desde la carta de tobt.
+const resenas = express.Router();
+resenas.use(express.json());
+core.resenas.montarRutas(resenas);
+gateway.use("/resenas", resenas);
+
 
 app.listen(PORT, () => console.log(`Gateway en puerto ${PORT}`));

@@ -46,7 +46,16 @@ export function paginaTerminos(cfg) {
         <li>entrar a cuentas o datos que no son tuyos, ni intentar saltarse los controles de seguridad o los permisos;</li>
         <li>suplantar a otra persona, crear cuentas falsas o usar el servicio para obtener beneficios de forma fraudulenta;</li>
         <li>enviar peticiones automáticas masivas, probar contraseñas o sobrecargar el servicio;</li>
-        <li>usar el servicio para fines ilícitos o para dañar a otras personas.</li>
+        <li>usar el servicio para fines ilícitos o para dañar a otras personas;</li>
+        <li>publicar reseñas falsas, ofensivas, discriminatorias o que difamen a otras personas, que incluyan datos personales de terceros, publicidad o enlaces, o que no correspondan a una experiencia real.</li>
+      </ul>`],
+    ["Reseñas de platos", `
+      <p>Si ya pagaste un plato en un establecimiento, puedes dejar una reseña (de 1 a 5 estrellas y un comentario de hasta 500 caracteres) en la carta de ese establecimiento. Es una opinión tuya y eres responsable de ella.</p>
+      <ul>
+        <li>La reseña se <strong>publica al instante</strong> en la carta, visible para cualquier persona que la abra, con tu primer nombre y la inicial de tu apellido (por ejemplo, «María P.»).</li>
+        <li>Puedes editarla o borrarla cuando quieras desde la misma carta. Cada persona puede dejar una reseña por plato.</li>
+        <li>Cualquier cliente puede reportar una reseña. El establecimiento (o ${P}) puede <strong>ocultar</strong> las que incumplan estos términos; una reseña oculta deja de verse en la carta, pero puede conservarse. Quien la escribió sigue viéndola marcada como oculta.</li>
+        <li>Al publicarla nos autorizas, sin costo y mientras la reseña exista, a mostrarla en la carta del establecimiento.</li>
       </ul>`],
     ["Si eres un establecimiento o parte de su personal", `
       <ul>
