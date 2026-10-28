@@ -52,7 +52,7 @@ gateway.use("/empleados", empleados);
 
 // --- Clientes ---
  const clientes = express.Router();
- clientes.use(express.json());
+ clientes.use(express.json({ limit: "1mb" })); // una importación admite hasta 500 filas
  core.clientes.montarRutas(clientes);
  gateway.use("/clientes", clientes);
 
