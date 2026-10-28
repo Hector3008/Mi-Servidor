@@ -5,6 +5,7 @@ import { createRouter as crearTobt } from "tobt";
 import { createRouter as cuenta } from "cuenta";
  import { crearLanding } from "./landing/index.js";
 import { crearLegal } from "./legal/index.js";
+import { crearTobtInfo } from "./tobt-info/index.js";
 import { crearIconos } from "./iconos/index.js";
  
 
@@ -39,6 +40,9 @@ gateway.use(crearLanding());
 
 // Términos y condiciones y política de privacidad (/terminos, /privacidad); los datos del responsable salen de LEGAL_*.
 gateway.use(crearLegal());
+
+// Presentación de tobt (/tobt/info): va antes de /tobt (el servicio) y es estática, como las páginas legales.
+gateway.use(crearTobtInfo());
 
 // --- Empleados ---
 const empleados = express.Router();
