@@ -95,7 +95,7 @@ export function paginaTobtInfo(cfg) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tobt · tu bar and table · ${p}</title>
+<title>Tobt · to bar and table · ${p}</title>
 <meta name="description" content="Tobt reúne los pedidos del salón, la cocina, la caja y la carta de tu local en un solo lugar, con puntos y promociones para tus clientes.">
 <link rel="icon" href="../favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
@@ -113,7 +113,7 @@ export function paginaTobtInfo(cfg) {
   <main>
     <div class="hero">
       <div class="contenedor">
-        <p class="etiqueta">Tobt · tu bar and table</p>
+        <p class="etiqueta">Tobt · to bar and table</p>
         <h1>Tu salón, tu cocina y tu caja, en una sola pantalla.</h1>
         <p class="lead">Tobt es el servicio de ${p} para bares, cafeterías y restaurantes: el mesero toma el pedido, la cocina lo ve al instante, caja cobra y tus clientes tienen su carta, sus puntos y sus promociones en el celular.</p>
         <div class="acciones">
