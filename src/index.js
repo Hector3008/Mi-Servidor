@@ -7,6 +7,10 @@ import { createRouter as cuenta } from "cuenta";
 import { crearLegal } from "./legal/index.js";
 import { crearTobtInfo } from "./tobt-info/index.js";
 import { crearIconos } from "./iconos/index.js";
+import { crearCorreo } from "./correo/index.js";
+import { crearSolicitudes } from "./solicitudes/index.js";
+import { crearOperador } from "./operador/index.js";
+import { crearRecuperacion } from "./recuperacion/index.js";
  
 
 const app = express();
@@ -43,6 +47,16 @@ gateway.use(crearLegal());
 
 // Presentación de tobt (/tobt/info): va antes de /tobt (el servicio) y es estática, como las páginas legales.
 gateway.use(crearTobtInfo());
+
+// Crear una empresa con aprobación del operador por correo (/crear-empresa, /solicitud/:token, /acceso/:token). Sin las variables
+// URL_PUBLICA, OPERADOR_CORREO, RESEND_API_KEY y CORREO_REMITENTE queda desactivado y la página lo dice.
+const correo = crearCorreo();
+gateway.use(crearSolicitudes({ core, correo }));
+
+// Pantalla de operador (/operador: aprobar solicitudes, ver empresas, suspender, reenviar accesos) y «¿Olvidaste tu contraseña?» (/recuperar).
+// Mismas variables que arriba; sin ellas quedan desactivadas y lo avisan en el log.
+gateway.use(crearOperador({ core, correo }));
+gateway.use(crearRecuperacion({ core, correo }));
 
 // --- Empleados ---
 const empleados = express.Router();

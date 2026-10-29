@@ -12,7 +12,7 @@ export function fechaLarga(iso) {
   return `${Number(m[3])} de ${MESES[Number(m[2]) - 1]} de ${m[1]}`;
 }
 
-const ESTILOS = `
+export const ESTILOS = `
   :root { --fondo:#f7f6f2; --superficie:#fff; --texto:#1c1f24; --texto-suave:#5a6270; --borde:#dcd9d0; --principal:#1f5f4a; --acento:#b4561b; --aviso:#fff4e5; --aviso-borde:#e8c48f; }
   @media (prefers-color-scheme: dark) {
     :root { --fondo:#12151a; --superficie:#1a1f26; --texto:#eceef2; --texto-suave:#a2abb8; --borde:#2b323c; --principal:#5fc3a0; --acento:#e59a63; --aviso:#2a2118; --aviso-borde:#6b4d2a; }
