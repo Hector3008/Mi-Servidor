@@ -65,6 +65,7 @@ test("cada página enlaza a la otra, al inicio y muestra su fecha de versión", 
     for (const r of [t, p]) assert.match(r.cuerpo, /href="\.\/"/);
     assert.match(t.cuerpo, new RegExp(`${Number(VERSION_TERMINOS.slice(8))} de octubre de 2026`));
     assert.match(p.cuerpo, new RegExp(`${Number(VERSION_PRIVACIDAD.slice(8))} de octubre de 2026`));
+    assert.match(p.cuerpo, /Si eres personal o administrador<\/em> y usas el botón del inicio de sesión/, "la privacidad cubre el acceso del personal con Google (5.69)");
   });
 });
 
@@ -171,7 +172,7 @@ test("las reseñas de platos (5.62) están en los términos y en la política de
 
 test("las versiones de los textos legales subieron con las reseñas (26 de octubre de 2026)", () => {
   assert.equal(VERSION_TERMINOS, "2026-10-26");
-  assert.equal(VERSION_PRIVACIDAD, "2026-10-26");
+  assert.equal(VERSION_PRIVACIDAD, "2026-10-29");
 });
 
 test("el pie de las páginas legales lleva al landing de la plataforma (5.61)", async () => {

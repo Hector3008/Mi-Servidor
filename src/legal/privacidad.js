@@ -34,6 +34,7 @@ export function paginaPrivacidad(cfg) {
       <p>Si eliges «Iniciar sesión con Google», Google nos entrega solo tu identidad básica: un identificador de tu cuenta de Google, tu correo (verificado por Google) y tu nombre. No accedemos a tus contactos, correos, archivos, calendario ni a ningún otro dato de tu cuenta de Google.</p>
       <ul>
         <li>Los usamos únicamente para iniciar tu sesión y para crear tu ficha de cliente o vincularte a la que ya existe con ese mismo correo en ese establecimiento (así conservas tus puntos).</li>
+        <li><em>Si eres personal o administrador</em> y usas el botón del inicio de sesión de la cuenta del personal: solo te deja entrar si ya existe una cuenta tuya con ese correo (no crea cuentas nuevas). La primera vez guardamos el identificador de tu cuenta de Google para reconocerla después, y entrar así no te pide cambiar la contraseña temporal.</li>
         <li>No los usamos para publicidad ni los compartimos con terceros, salvo lo descrito en la sección «Con quién se comparten».</li>
         <li>Al mostrar el botón, tu navegador carga un script de Google (accounts.google.com) y el inicio de sesión ocurre en los servidores de Google, que tratan los datos según su propia política de privacidad.</li>
         <li>Puedes retirar el permiso en cualquier momento desde la configuración de tu cuenta de Google (apartado de seguridad y conexiones con terceros). Si tu cuenta solo entra con Google, puedes pedirnos que te ayudemos a acceder de otra forma o a cancelarla.</li>

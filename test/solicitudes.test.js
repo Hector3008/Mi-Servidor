@@ -163,7 +163,7 @@ describe("formulario público", () => {
     const llamada = t.core.llamadas[0][1];
     assert.deepEqual(llamada.servicios, ["tobt"]);
     assert.deepEqual(llamada.serviciosPermitidos, ["tobt"]);
-    assert.deepEqual(llamada.aceptoTerminos, { terminos: "2026-10-26", privacidad: "2026-10-26" });
+    assert.deepEqual(llamada.aceptoTerminos, { terminos: "2026-10-26", privacidad: "2026-10-29" });
     const ok = await t.pedir("/crear-empresa?enviada=1");
     assert.match(await ok.text(), /Recibimos tu solicitud/);
   });
