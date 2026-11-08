@@ -12,7 +12,7 @@ import { crearCorreo } from "./correo/index.js";
 import { crearSolicitudes } from "./solicitudes/index.js";
 import { crearOperador } from "./operador/index.js";
 import { crearRecuperacion } from "./recuperacion/index.js";
- 
+import { createRouter as crearAgatas } from "agatas";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -100,6 +100,9 @@ const anuncios = express.Router();
 anuncios.use(express.json());
 core.anuncios.montarRutas(anuncios);
 gateway.use("/anuncios", anuncios);
+
+
+gateway.use("/agatas", crearAgatas({ core }));
 
 // Moderación de reseñas de platos (5.62): resena:leer / resena:gestionar. Los clientes escriben las suyas desde la carta de tobt.
 const resenas = express.Router();
