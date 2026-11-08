@@ -2,6 +2,7 @@ import express from "express";
 import { connectDB } from "./db.js";
 import { services } from "./services.js";
 import { createRouter as crearTobt } from "tobt";
+import { createRouter as crearTopd } from "topd";
 import { createRouter as cuenta } from "cuenta";
  import { crearLanding } from "./landing/index.js";
 import { crearLegal } from "./legal/index.js";
@@ -83,6 +84,8 @@ for (const { name, path, factory } of services) {
 
    // --- Tobt ---
 gateway.use("/tobt", crearTobt({ core }));
+// --- Topd (to Picking and Dispatch: ventas → picking → despacho) ---
+gateway.use("/topd", crearTopd({ core }));
 //-- login / cuenta --
 gateway.use("/cuenta", cuenta());
 app.use(BASE_PATH || "/", gateway);
