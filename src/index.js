@@ -102,6 +102,11 @@ core.anuncios.montarRutas(anuncios);
 gateway.use("/anuncios", anuncios);
 
 
+const kardex = express.Router();
+kardex.use(express.json());
+core.kardex.montarRutas(kardex);
+gateway.use("/kardex", kardex);
+
 gateway.use("/agatas", crearAgatas({ core }));
 
 // Moderación de reseñas de platos (5.62): resena:leer / resena:gestionar. Los clientes escriben las suyas desde la carta de tobt.
