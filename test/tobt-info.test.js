@@ -133,6 +133,14 @@ test("lo que dice la página no promete lo que no hay (comprobantes electrónico
   await con(CON_CORREO, async (server) => {
     const { cuerpo } = await pedir(server, "/tobt/info");
     assert.match(cuerpo, /No son comprobantes electrónicos/);
+    assert.match(cuerpo, /La factura la emites fuera del sistema/, "las facturas pedidas no son facturación electrónica");
     assert.doesNotMatch(cuerpo, /S\/\s?\d|US\$|\bplan(?:es)?\b/i, "sin precios ni planes");
+  });
+});
+
+test("la página cuenta lo nuevo: inventario y recetas, facturas pedidas, reportes con Excel", async () => {
+  await con(CON_CORREO, async (server) => {
+    const { cuerpo } = await pedir(server, "/tobt/info");
+    for (const texto of ["Inventario y recetas", "Facturas pedidas", "Reportes y Excel", "margen por plato", "se descarga a Excel"]) assert.ok(cuerpo.includes(texto), texto);
   });
 });

@@ -4,7 +4,7 @@ import { esc } from "../legal/plantilla.js";
 // interfaz. HTML estático sin scripts; enlaces e imágenes relativos a `/tobt/` (la página vive en `/tobt/info`), así que
 // sirve con cualquier BASE_PATH. Las capturas son de una cafetería de ejemplo con datos inventados (ver `img/`).
 
-const ESTILOS = `
+export const ESTILOS = `
   :root { --fondo:#f7f6f2; --superficie:#fff; --texto:#1c1f24; --texto-suave:#5a6270; --borde:#dcd9d0; --principal:#1f5f4a; --principal-texto:#fff; --acento:#b4561b; --radio:14px; --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
   @media (prefers-color-scheme: dark) {
     :root { --fondo:#12151a; --superficie:#1a1f26; --texto:#eceef2; --texto-suave:#a2abb8; --borde:#2b323c; --principal:#5fc3a0; --principal-texto:#0c1713; --acento:#e59a63; }
@@ -66,7 +66,9 @@ const HERRAMIENTAS = [
   ["Promociones y anuncios", "2x1, descuentos por combo, por día o por horario, aplicados solos al pedido; y los eventos o avisos que quieras mostrar en la carta."],
   ["Reseñas de tus platos", "Solo opina quien ya pagó el plato. Se publican al instante y tú puedes ocultar las que no corresponden."],
   ["Recibos y cuenta", "Recibo de pago numerado y cuenta de consumo, listos para imprimir en 80 mm o A4, con tu logo y tus datos. No son comprobantes electrónicos."],
-  ["Reportes de ventas", "Ventas en el tiempo, por categoría, por mesero y por cliente, platos más vendidos y horas pico."],
+  ["Facturas pedidas", "Al cobrar anotas si el cliente quiere factura y su RUC o referencia. Una pestaña te muestra cuáles faltan por emitir y las marcas como emitidas, con su número. La factura la emites fuera del sistema."],
+  ["Inventario y recetas", "Insumos con compras, mermas, conteos y ajustes; cada plato con su receta, y al vender se descuenta lo que gasta. Los errores se corrigen con una anulación, sin borrar el historial."],
+  ["Reportes y Excel", "Ventas en el tiempo, por categoría, por mesero y por cliente, platos más vendidos y horas pico. Y del inventario: consumo, costo de ventas y margen por plato. Todo se descarga a Excel."],
   ["Equipo, roles y tablets", "Cada persona entra con lo que su rol le permite. En el salón, las tablets se emparejan y el personal entra con un PIN."],
 ];
 
@@ -74,8 +76,8 @@ const PASOS = [
   ["El mesero abre el pedido", "Mesa, persona o barra, y los platos del catálogo."],
   ["La cocina prepara", "Ve cada ítem y lo marca listo."],
   ["Se entrega", "El mesero marca lo que ya salió a la mesa."],
-  ["Caja cobra", "Todo, o solo lo que paga cada quien."],
-  ["Recibo y puntos", "El recibo sale al cobrar y el cliente suma sus puntos."],
+  ["Caja cobra", "Todo, o solo lo que paga cada quien; si piden factura, se anota."],
+  ["Recibo y puntos", "El recibo sale al cobrar, el inventario se descuenta y el cliente suma sus puntos."],
 ];
 
 const img = (n, w, h, alt) => `<img src="info/img/${n}.webp" width="${w}" height="${h}" loading="lazy" alt="${esc(alt)}">`;
@@ -179,15 +181,25 @@ export function paginaTobtInfo(cfg) {
     <section id="administracion">
       <div class="contenedor">
         <h2>Tú tienes el control</h2>
-        <p class="intro">Desde tu cuenta administras el equipo, el catálogo, los puntos, las promociones, los anuncios, las reseñas y los reportes.</p>
+        <p class="intro">Desde tu cuenta administras el equipo, el catálogo, el inventario, los puntos, las promociones, los anuncios, las reseñas, las facturas pedidas y los reportes.</p>
         <div class="par">
           <figure>
-            ${img("cuenta-inicio", 800, 700, "Inicio de la cuenta con accesos a Mi perfil, Equipo, Catálogo, Fidelización, Promociones, Anuncios, Reseñas, Reportes, Empresa, Pedidos, Cocina y Platos agotados.")}
+            ${img("cuenta-inicio", 800, 1049, "Inicio de la cuenta con accesos a Mi perfil, Equipo, Catálogo, Fidelización, Promociones, Anuncios, Reseñas, Inventario, Reportes, Facturas con el aviso de tres pendientes, Empresa, Clientes, Pedidos, Cocina y Platos agotados.")}
             <figcaption><b>Tu inicio.</b> Cada persona ve solo los accesos que su rol permite.</figcaption>
           </figure>
           <figure>
             ${img("resenas-admin", 980, 520, "Administración, pestaña Reseñas: una tabla con el plato, la nota, el comentario, el autor y el estado de cada reseña, con botones Ocultar y Mostrar.")}
             <figcaption><b>Reseñas.</b> Ves primero las que los clientes reportaron y ocultas las que no corresponden.</figcaption>
+          </figure>
+        </div>
+        <div class="par">
+          <figure>
+            ${img("reportes", 1000, 1535, "Administración, pestaña Reportes: ventas del mes con una línea en el tiempo, ventas por categoría, por mesero y por cliente, platos más vendidos y un mapa de calor con las horas pico, y el botón Exportar a Excel.")}
+            <figcaption><b>Reportes.</b> Ventas por día, categoría, mesero y cliente, los platos que más salen y tus horas pico; todo se descarga a Excel.</figcaption>
+          </figure>
+          <figure>
+            ${img("facturas", 1000, 600, "Administración, pestaña Facturas: tres facturas pendientes con su recibo, fecha, cliente, RUC, total y el botón Marcar como emitida, y un campo para escribir el número de la factura.")}
+            <figcaption><b>Facturas pedidas.</b> Ves cuáles faltan por emitir y marcas cada una con su número.</figcaption>
           </figure>
         </div>
         <p class="nota">Las capturas son de una cafetería de ejemplo («Café Aurora») con datos inventados.</p>
